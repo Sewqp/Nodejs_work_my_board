@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/style.css">
+    <title>로그인</title>
+</head>
+<body>
+    <div class="container login-wrapper">
+        <div class="login-box">
+            <h2 class="login-title">로그인</h2>
+            
+            <% if (typeof error !== 'undefined') { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+            
+            <form action="/login" method="POST" class="login-form">
+                <div class="form-group">
+                    <input type="email" name="email" class="form-input" placeholder="이메일" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-input" placeholder="비밀번호" required>
+                </div>
+                <button type="submit" class="btn btn-login-submit">로그인</button>
+            </form>
+
+            <div class="login-footer">
+                <p>계정이 없으신가요? <a href="/signup" class="link-signup">회원가입</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

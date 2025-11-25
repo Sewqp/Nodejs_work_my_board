@@ -1,0 +1,295 @@
+/* 1. 기본 설정 (Reset & Typography) */
+:root {
+    --naver-green: #03C75A;
+    --naver-green-hover: #02b351;
+    --border-color: #e4e8eb;
+    --text-primary: #333;
+    --text-secondary: #888;
+    --bg-gray: #f5f6f7;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background-color: var(--bg-gray);
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, li {
+    list-style: none;
+}
+
+/* 2. 레이아웃 (Container) */
+.container {
+    max-width: 1080px; /* 네이버 PC 버전의 일반적인 폭 */
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* 살짝 둥근 모서리 */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* 3. 버튼 스타일 (Naver Style Buttons) */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* 초록색 메인 버튼 (글쓰기, 로그인, 등록 등) */
+.btn-write, .btn-login, .btn-submit, .btn-comment-submit, .btn-signup {
+    background-color: var(--naver-green);
+    color: #fff;
+    border-color: var(--naver-green);
+}
+
+.btn-write:hover, .btn-login:hover, .btn-submit:hover, .btn-signup:hover {
+    background-color: var(--naver-green-hover);
+}
+
+/* 흰색 서브 버튼 (취소, 로그아웃, 목록 등) */
+.btn-logout, .btn-cancel, .btn-list, .btn-edit, .btn-delete {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #d3d5d7;
+}
+
+.btn-logout:hover, .btn-cancel:hover {
+    background-color: #f9f9f9;
+}
+
+/* 4. 헤더 (Header) */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--text-primary); /* 네이버 특유의 진한 하단 선 */
+    padding-bottom: 15px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.auth-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* 5. 게시판 목록 (Table) */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid #333; /* 상단 진한 선 */
+}
+
+.board-table th {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 12px 0;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.board-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+}
+
+/* 제목은 왼쪽 정렬 */
+.td-title {
+    text-align: left !important;
+    padding-left: 20px;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+    color: var(--naver-green);
+}
+
+.no-data td {
+    padding: 50px 0;
+    color: var(--text-secondary);
+}
+
+/* 6. 게시글 상세 (Post Detail) */
+.post-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.post-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    gap: 15px;
+}
+
+.post-content {
+    min-height: 300px;
+    padding: 20px 0;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.post-action-box {
+    margin-top: 30px;
+    text-align: right;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* 7. 댓글 (Comments) */
+.comment-section {
+    margin-top: 40px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.comment-header {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.comment-item {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 0;
+}
+
+.comment-info {
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: #999;
+}
+
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.input-comment {
+    flex-grow: 1;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    resize: none;
+    border-radius: 4px;
+}
+
+.input-comment:focus {
+    outline: none;
+    border-color: var(--naver-green);
+}
+
+/* 8. 폼 (Login & Write) */
+.login-wrapper {
+    max-width: 460px; /* 네이버 로그인 창 크기 */
+    margin-top: 80px;
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--naver-green); /* 로고 색상 느낌 */
+    font-size: 32px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dadada;
+    background-color: #fff;
+    font-size: 15px;
+    border-radius: 4px; /* 인풋창 둥글게 */
+}
+
+/* 인풋 포커스 시 네이버 특유의 초록 라인 */
+.form-input:focus {
+    outline: none;
+    border-color: var(--naver-green);
+    box-shadow: 0 0 4px rgba(3, 199, 90, 0.3);
+}
+
+.btn-login-submit {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.link-signup {
+    text-decoration: underline;
+}
+
+/* 에러 메시지 */
+.alert-error {
+    color: #ff003e;
+    background-color: #fff;
+    border: 1px solid #ff003e;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+}

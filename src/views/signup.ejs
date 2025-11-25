@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container login-wrapper">
+        <div class="login-box">
+            <h2 class="login-title">회원가입</h2>
+            <% if (typeof error !== 'undefined') { %>
+                <div class="alert alert-error"><%= error %></div>
+            <% } %>
+
+            <form action="/signup" method="POST" class="login-form">
+                <div class="form-group">
+                    <label class="form-label">이메일</label>
+                    <input type="email" name="email" class="form-input" required placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">비밀번호</label>
+                    <input type="password" name="password" class="form-input" required placeholder="비밀번호 입력">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">닉네임</label>
+                    <input type="text" name="username" class="form-input" required placeholder="닉네임 입력">
+                </div>
+                <button type="submit" class="btn btn-signup" style="width: 100%; margin-top: 10px;">가입하기</button>
+            </form>
+            <div class="login-footer">
+                <a href="/login" class="link-signup">로그인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

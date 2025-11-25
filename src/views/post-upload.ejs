@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container write-container">
+        <h2 class="page-title">게시글 작성</h2>
+
+        <% if (typeof error !== 'undefined') { %>
+            <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/post-upload" method="POST" class="write-form">
+            
+            <div class="form-group">
+                <label class="form-label">게시판 선택</label>
+                <select name="board_id" class="form-input">
+                    <option value="1">자유게시판</option>
+                    <% if (typeof sessionUser !== 'undefined' && sessionUser.role === 'admin') { %>
+                        <option value="2">공지사항</option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="title" class="form-label">제목</label>
+                <input type="text" id="title" name="title" class="form-input input-title" value="<%= typeof title !== 'undefined' ? title : '' %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="content" class="form-label">내용</label>
+                <textarea id="content" name="post_content" class="form-input input-content" rows="10" required><%= typeof post_content !== 'undefined' ? post_content : '' %></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">작성완료</button>
+                <a href="/posts" class="btn btn-cancel">취소</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

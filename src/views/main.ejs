@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>메인 게시판</title>
+</head>
+<body>
+    <div class="container main-container">
+        <div class="header-section">
+            <h1 class="page-title">자유 게시판</h1>
+
+            <div class="auth-box">
+                <% if(sessionUser) { %>
+                    <span class="user-info"><strong><%= sessionUser.nickname %></strong>님</span>
+                    <div class="btn-group">
+                        <a href="/post-upload" class="btn btn-write">글쓰기</a>
+                        <a href="/logout" class="btn btn-logout">로그아웃</a>
+                    </div>
+                <% } else { %>
+                    <div class="btn-group">
+                        <a href="/login" class="btn btn-login">로그인</a>
+                        <a href="/signup" class="btn btn-signup">회원가입</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    
+        <div class="board-list-wrapper">
+            <table class="board-table">
+                <thead>
+                    <tr>
+                        <th class="th-num">번호</th>
+                        <th class="th-title">제목</th>
+                        <th class="th-author">작성자</th>
+                        <th class="th-date">작성일</th>
+                        <th class="th-view">조회</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (posts && posts.length > 0) { %>
+                        <% posts.forEach(function(post) { %>
+                            <tr class="post-item" style="<%= post.board_id == 2 ? 'background-color: #fcfcfc;' : '' %>">
+                                <td class="td-num">
+                                    <% if (post.board_id == 2) { %>
+                                        <span style="color: #ff0000; font-weight: bold;">[공지]</span>
+                                    <% } else { %>
+                                        <%= post.post_id %>
+                                    <% } %>
+                                </td>
+                                <td class="td-title">
+                                    <a href="/posts/<%= post.post_id %>" class="post-link">
+                                        <% if (post.board_id == 2) { %>
+                                            <strong><%= post.title %></strong>
+                                        <% } else { %>
+                                            <%= post.title %>
+                                        <% } %>
+                                    </a>
+                                </td>
+                                <td class="td-author"><%= post.nickname %></td>
+                                <td class="td-date"><%= new Date(post.created_at).toLocaleDateString() %></td>
+                                <td class="td-view"><%= post.view %></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr class="no-data">
+                            <td colspan="5">게시글이 존재하지 않습니다.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

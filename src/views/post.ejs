@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/style.css">
+    <title><%= post.title %></title>
+</head>
+<body>
+    <div class="container post-detail-container">
+        
+        <div class="post-view-box">
+            <div class="post-header">
+                <h2 class="post-title"><%= post.title %></h2>
+                <div class="post-meta">
+                    <span class="meta-author">작성자: <%= post.nickname %></span>
+                    <span class="meta-date"><%= new Date(post.created_at).toLocaleString() %></span>
+                    <span class="meta-view">조회수: <%= post.view %></span>
+                </div>
+            </div>
+
+            <div class="post-content">
+                <%= post.content %>
+            </div>
+        </div>
+
+        <div class="post-action-box">
+            <% if (sessionUser && sessionUser.id == post.user_id) { %>
+                <a href="/post-Update?id=<%= post.post_id %>" class="btn btn-edit">수정</a>
+                <form action="/post-Delete/<%= post.post_id %>" method="POST" class="form-delete">
+                    <button type="submit" class="btn btn-delete" onclick="return confirm('삭제하시겠습니까?');">삭제</button>
+                </form>
+            <% } %>
+            <a href="/posts" class="btn btn-list">목록으로</a>
+        </div>
+
+        <hr class="divider">
+
+        <div class="comment-section">
+            <h3 class="comment-header">댓글</h3>
+
+            <div class="comment-list">
+                <% comments.forEach(function(comment) { %>
+                    <div class="comment-item">
+                        <div class="comment-info">
+                            <span class="comment-author"><%= comment.nickname %></span>
+                            <span class="comment-date"><%= new Date(comment.created_at).toLocaleString() %></span>
+                        </div>
+                        <div class="comment-content">
+                            <%= comment.content %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+
+            <div class="comment-write-box">
+                <% if (sessionUser) { %>
+                    <form action="/posts/<%= post.post_id %>" method="POST" class="comment-form">
+                        <textarea name="comment_content" class="input-comment" placeholder="댓글을 남겨주세요" required></textarea>
+                        <button type="submit" class="btn btn-comment-submit">등록</button>
+                    </form>
+                <% } else { %>
+                    <div class="comment-login-msg">
+                        <a href="/login">로그인</a> 후 댓글을 작성할 수 있습니다.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
