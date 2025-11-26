@@ -32,13 +32,52 @@ router.get('/post-Update', (req, res) => {
 });
 
 router.get('/posts', (req, res) => {
-    const query = 'SELECT p.post_id, p.board_id, p.title, u.nickname, p.view, p.created_at FROM posts p JOIN users u ON p.user_id = u.id ORDER BY (p.board_id = 2) DESC, p.created_at DESC LIMIT 20;';
+    const page = parseInt(req.query.page) || 1; 
+    const search = req.query.search || '';      
+    const limit = 20;                           
+    const offset = (page - 1) * limit;          
 
-    db.query(query, (err, results) => {
-        if (err) {
-            return res.render('error', {message:'게시글 불러오기 실패.'});
+    let countQuery = 'SELECT COUNT(*) as total FROM posts p WHERE p.board_id IN (1, 2)';
+    let countParams = [];
+
+    if (search) {
+        countQuery += ' AND p.title LIKE ?';
+        countParams.push(`%${search}%`);
+    }
+
+    db.query(countQuery, countParams, (err, countResult) => {
+        if (err) return res.render('error', { message: 'DB 조회 실패' });
+        
+        const totalPosts = countResult[0].total;
+        const totalPages = Math.ceil(totalPosts / limit);
+
+        let dataQuery = `
+            SELECT p.post_id, p.board_id, p.title, u.nickname, p.view, p.created_at 
+            FROM posts p 
+            JOIN users u ON p.user_id = u.id 
+            WHERE p.board_id IN (1, 2) `;
+        
+        let dataParams = [];
+
+        if (search) {
+            dataQuery += ' AND p.title LIKE ? ';
+            dataParams.push(`%${search}%`);
         }
-        return res.render('main', {posts: results, sessionUser: req.session.user});
+
+        dataQuery += ` ORDER BY (p.board_id = 2) DESC, p.created_at DESC LIMIT ? OFFSET ?`;
+        dataParams.push(limit, offset);
+
+        db.query(dataQuery, dataParams, (err, posts) => {
+            if (err) return res.render('error', { message: '게시글 목록 실패' });
+
+            return res.render('main', {
+                posts: posts,
+                sessionUser: req.session.user,
+                currentPage: page,
+                totalPages: totalPages,
+                search: search
+            });
+        });
     });
 });
 
@@ -157,7 +196,7 @@ router.post('/post-Delete/:id', (req, res) => {
         const post_author_id = results[0].user_id;
         
         if (Number(post_author_id) !== Number(user_id)) { 
-            return res.render('error', { message: '자신의 글만 지울 수 있습니다.' });
+            return res.render('error', { message: '자신의 글만 지울 수 없습니다.' });
         }
         const deleteQuery = 'DELETE FROM posts WHERE post_id = ?'; 
         
